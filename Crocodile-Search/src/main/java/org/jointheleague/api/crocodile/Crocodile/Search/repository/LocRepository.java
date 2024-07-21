@@ -1,9 +1,13 @@
 package org.jointheleague.api.crocodile.Crocodile.Search.repository;
 
+import org.jointheleague.api.crocodile.Crocodile.Search.repository.dto.LocResponse;
+import org.jointheleague.api.crocodile.Crocodile.Search.repository.dto.Result;
 import org.jointheleague.api.crocodile.Crocodile.Search.service.LocService;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.reactive.function.client.WebClient;
+
+import java.util.List;
 
 @Repository
 public class LocRepository {
@@ -16,7 +20,7 @@ public class LocRepository {
                 .baseUrl(baseUrl)
                 .build();
     }
-    public String getResults(String query){
+    public List<Result> getResults(String query){
         return webClient.get()
                 .uri(uriBuilder -> uriBuilder
                         .queryParam("fo", "json")
@@ -25,7 +29,7 @@ public class LocRepository {
                         .build()
                 )
                 .retrieve()
-                .bodyToMono(dto)
+                .bodyToMono(LocResponse.class)
                 .block()
                 .getResults();
     }
