@@ -12,9 +12,9 @@ import java.util.List;
 @Repository
 public class LocRepository {
     private final WebClient webClient;
-    public static final String baseUrl = "https://www.loc.gov/collections/?fo=json&at=results";
+    public static final String baseUrl = "https://www.loc.gov/books";
 
-    public LocRepository(LocRepository locRepository) {
+    public LocRepository() {
         webClient = WebClient
                 .builder()
                 .baseUrl(baseUrl)
