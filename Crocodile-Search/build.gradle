@@ -27,7 +27,26 @@ dependencies {
 	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.0'
 	testImplementation 'junit:junit:4.13.1'
 }
+sourceSets{
+	intTest {
+		compileClasspath += sourceSets.main.output;
+		runtimeClasspath += sourceSets.main.output;
+	}
+}
+configurations {
+	intTestImplementation.extendsFrom testImplementation
+	intTestRunTimeOnly.extendsFrom runtimeOnly
+}
+task intTest(type: Test) {
+	useJUnitPlatform()
+	description = 'Runs the integration tests.'
+	group = 'verification'
 
+	testClassesDirs = sourceSets.intTest.output.classesDirs
+	classpath = sourceSets.intTest.runtimeClasspath
+	shouldRunAfter test
+}
 tasks.named('test') {
 	useJUnitPlatform()
 }
+check.dependsOn intTest
