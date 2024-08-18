@@ -14,6 +14,9 @@ public class LocRepository {
     private final WebClient webClient;
     public static final String baseUrl = "https://www.loc.gov/books";
 
+    public LocRepository(WebClient mockClientMock) {
+        webClient = mockClientMock;
+    }
     public LocRepository() {
         webClient = WebClient
                 .builder()
